@@ -31,8 +31,6 @@ void x_task(void *p) {
     data.axis = 0;
     int deadzone_min = -160;
     int deadzone_max = 160;
-    int filtered[5];
-    int sum = 0;
 
     while(1){
         adc_select_input(1);
@@ -45,7 +43,7 @@ void x_task(void *p) {
         if (average < deadzone_min || average > deadzone_max)
         {
             data.val = average/2;
-            xQueueSendFromISR(xQueueAdc, &data, 0);
+            xQueueSend(xQueueAdc, &data, 0);
         }
         vTaskDelay(pdMS_TO_TICKS(100));
     }
@@ -57,8 +55,6 @@ void y_task(void *p) {
     data.axis = 1;
     int deadzone_min = -160;
     int deadzone_max = 160;
-    int filtered[5];
-    int sum = 0;
 
     while(1){
         adc_select_input(0);
@@ -71,7 +67,7 @@ void y_task(void *p) {
         if (average < deadzone_min || average > deadzone_max)
         {
             data.val = average/2;
-            xQueueSendFromISR(xQueueAdc, &data, 0);
+            xQueueSend(xQueueAdc, &data, 0);
         }
         vTaskDelay(pdMS_TO_TICKS(100));
     }
