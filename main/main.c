@@ -75,7 +75,6 @@ void y_task(void *p) {
 
 void uart_task(void *p) {
     adc_t data;
-    uint8_t buffer[4];
     while (1) {
         xQueueReceive(xQueueAdc, &data, portMAX_DELAY);
         write_package(data);
